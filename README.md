@@ -1,1 +1,0 @@
-# lugar-seguro-iot
