@@ -16,8 +16,15 @@ interface Sensor {
 })
 export class DashboardComponent implements OnInit {
 
+  page: number = 1;
+  pageSize: number = 5;    
+  collectionSize: number = 0
+
   sensors?: SensorData[];
   sensorMax: any = new Object();
+  weekValues: any[] = []
+  daysNames: string[] = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  mostCommonDay: string = ''
   
 
   constructor(private sensorService : SensorService) { 
@@ -40,15 +47,40 @@ export class DashboardComponent implements OnInit {
       }, {});
       
       let objectEntries = Object.entries(countArray); //transforma el objeto en un array
-      console.log(objectEntries)
       let maximo = this.buscarMaximo(objectEntries);
-      console.log(maximo)
       this.sensorMax = maximo;
 
       // console.log('El máximo valor es:', maximo);
       // console.log(maximo)
       // console.log(objectEntries);
+      this.weekValues = this.obtenerCantidadPorDia(data)
+      this.refreshCharts()
+      this.collectionSize = data.length
+      
+      this.mostCommonDay = this.daysNames[this.weekValues.indexOf(Math.max(...this.weekValues))]
+      
     });
+  }
+
+  obtenerCantidadPorDia(lista: {key: string, sensor: string, date: string, timestamp: string}[]): number[] {
+    const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const cantidadPorDia: { [key: string]: number } = {};
+
+    lista.forEach(objeto => {
+      const fechaPartes = objeto.date.split('/');
+      const fecha = new Date(Number(fechaPartes[2]), Number(fechaPartes[1]) - 1, Number(fechaPartes[0]));
+      const diaSemana = diasSemana[fecha.getDay()];
+
+      if (cantidadPorDia[diaSemana]) {
+        cantidadPorDia[diaSemana]++;
+      } else {
+        cantidadPorDia[diaSemana] = 1;
+      }
+    });
+
+    return diasSemana.map(dia => (
+      cantidadPorDia[dia] || 0
+    ));
   }
 
   buscarMaximo(lista) {
@@ -131,10 +163,9 @@ export class DashboardComponent implements OnInit {
       /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
       var datawebsiteViewsChart = {
-        labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Ssabado', 'Domingo'],
+        labels: this.daysNames,
         series: [
-          [542, 443, 320, 780, 553, 453, 326]
-
+          this.weekValues
         ]
       };
       var optionswebsiteViewsChart = {
@@ -142,7 +173,7 @@ export class DashboardComponent implements OnInit {
               showGrid: false
           },
           low: 0,
-          high: 1000,
+        high: Math.max(...this.weekValues),
           chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
       };
       var responsiveOptions: any[] = [
@@ -159,6 +190,37 @@ export class DashboardComponent implements OnInit {
 
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
+  }
+
+  refreshCharts(){
+    var datawebsiteViewsChart = {
+      labels: this.daysNames,
+      series: [
+        this.weekValues
+      ]
+    };
+    var optionswebsiteViewsChart = {
+      axisX: {
+        showGrid: false
+      },
+      low: 0,
+      high: Math.max(...this.weekValues),
+      chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
+    };
+    var responsiveOptions: any[] = [
+      ['screen and (max-width: 640px)', {
+        seriesBarDistance: 5,
+        axisX: {
+          labelInterpolationFnc: function (value) {
+            return value[0];
+          }
+        }
+      }]
+    ];
+    var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+
+    //start animation for the Emails Subscription Chart
+    // this.startAnimationForBarChart(websiteViewsChart);
   }
 
 }

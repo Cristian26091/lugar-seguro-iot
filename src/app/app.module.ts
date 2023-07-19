@@ -27,7 +27,6 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase }

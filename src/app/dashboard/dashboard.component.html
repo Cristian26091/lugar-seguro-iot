@@ -27,7 +27,7 @@
                           <i class="material-icons calendar_month">calendar_month</i>
                       </div>
                       <p class="card-category">Día</p>
-                      <h3 class="card-title">$34,245</h3>
+                      <h3 class="card-title">{{mostCommonDay}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
@@ -69,7 +69,7 @@
                           </thead>
                           <!-- DATOS -->
                           <tbody>
-                              <tr *ngFor="let sensor of sensors">
+                              <tr *ngFor="let sensor of sensors | pagination:page">
                                   <td>{{sensor.sensor}}</td>
                                   <td>{{sensor.date}}</td>
                                   <td>{{sensor.timestamp}}</td>
@@ -78,6 +78,10 @@
                       </table>
                   </div>
               </div>
+            <div class="pagination-container">
+                <ngb-pagination class="pagination-container" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+            </div>
           </div>
       </div>
   </div>
