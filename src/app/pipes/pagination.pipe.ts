@@ -6,6 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PaginationPipe implements PipeTransform {
 
     public transform(value: any[], page): any {
-        return [...value.slice(5 * (page - 1), 5 * (page))]
+        try {
+            return [...value.slice(5 * (page - 1), 5 * (page))]
+        } catch (error) {}
     }
 }
