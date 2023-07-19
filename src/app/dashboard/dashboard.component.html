@@ -1,0 +1,84 @@
+<div class="main-content">
+  <div class="container ">
+      <div class="row align-items-center justify-content-center">
+        <!-- BOTON 1 -->
+          <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-warning card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons memory">memory</i>
+                      </div>
+                      <p class="card-category">{{sensorMax.sensor}}</p>
+                      <h3 class="card-title">{{sensorMax.cantidad}}
+                      </h3>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons"></i> Sensor más utilizado
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <!-- BOTON 2  -->
+          <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-success card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons calendar_month">calendar_month</i>
+                      </div>
+                      <p class="card-category">Día</p>
+                      <h3 class="card-title">$34,245</h3>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons"></i> Registros del ultimo mes
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- GRAFICO -->
+      <div class="row align-items-center justify-content-center">
+         
+          <div class="col-md-8">
+              <div class="card card-chart">
+                  <div class="card-header card-header-warning">
+                      <div class="ct-chart" id="websiteViewsChart"></div>
+                  </div>
+                  <div class="card-body">
+                      <h4 class="card-title">Registros sensores vs semana</h4>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- TABLA -->
+      <div class="row align-items-center justify-content-center">
+          
+          <div class="col-md-8">
+              <div class="card">
+                  <div class="card-header card-header-primary">
+                      <h4 class="card-title">Registro de sensores</h4>
+                  </div>
+                  <div class="card-body table-responsive">
+                      <table class="table table-hover">
+                          <thead class="text-warning ">
+                              <th>Nombre sensor</th>
+                              <th>Fecha</th>
+                              <th>Hora</th>
+                          </thead>
+                          <!-- DATOS -->
+                          <tbody>
+                              <tr *ngFor="let sensor of sensors">
+                                  <td>{{sensor.sensor}}</td>
+                                  <td>{{sensor.date}}</td>
+                                  <td>{{sensor.timestamp}}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "iot-hogar-seguro": {
+      "hosting": {
+        "material-dashboard-angular": [
+          "iot-hogar-seguro"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "iot-hogar-seguro"
+  }
+}

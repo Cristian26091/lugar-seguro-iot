@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "material-dashboard-angular",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
